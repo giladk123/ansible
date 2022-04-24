@@ -23,7 +23,7 @@
          hostname: "{{ ec2_node_info.instances[0].public_ip_address }}"
          ansible_ssh_host: micro-master
          ansible_ssh_port: 22
-         inventory_dir: /var/jenkins_home/ansible/inventory.txt
+         inventory_dir: /var/jenkins_home/ansible/hosts
          groupname: microk8s
 
     - name: Wait 300 seconds for port 22 to become open and contain "OpenSSH"
