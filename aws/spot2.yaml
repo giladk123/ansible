@@ -47,8 +47,16 @@
     - name: install python
       raw: 'sudo apt-get -y install python3'
   tasks:
-    - name: update and upgrade
-      apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+    - name: update all packages on servers
+      apt:
+        update_cache: yes
+        force_apt_get: yes
+        cache_valid_time: 3600
+
+    - name: Upgrade all packages on servers
+      apt:
+        upgrade: dist
+        force_apt_get: yes
 
     - name: Install Apache
       apt: 
