@@ -65,23 +65,19 @@
   remote_user: ubuntu
   become: yes
   gather_facts: no
-  pre_tasks:
-    - name: install python
-      raw: 'sudo apt-get -y install python3'
+  roles:
+    - role: racqspace.microk8s
+      vars:
+        microk8s_plugins:
+          istio: true
+          ingress: true
+          dns: true
+          helm3: true
+          dashboard: true
+  
   tasks:
-    - name: update all packages on servers
-      apt:
-        update_cache: yes
-        force_apt_get: yes
-        cache_valid_time: 3600
-
-    - name: Upgrade all packages on servers
-      apt:
-        upgrade: dist
-        force_apt_get: yes
-
-    - name: Install Apache
-      apt: 
-        name: apache2
-        state: present
-   
+    - name: add ubuntu user to microk8s group
+      command: usermod -a -G microk8s ubuntu
+    
+    - name: chown folder for ubuntu user
+      command: chown -f -R ubuntu ~/.kube
